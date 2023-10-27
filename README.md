@@ -14,6 +14,7 @@ A simple ToDo app to creating tasks for any occasion. You can create specific gr
 - using emojis for categories
 - search tasks
 - ability to create a new task using a button "Return" on the keyboard or the line "+ New Item"
+- ability to delete the task using a button "Del" on the keyboard or the button "×" in the line
 - ability to create a task anywhere in the table
 
 ### Images:
