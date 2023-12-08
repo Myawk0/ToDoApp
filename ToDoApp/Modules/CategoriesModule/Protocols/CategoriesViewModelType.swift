@@ -26,6 +26,5 @@ protocol CategoriesViewModelType {
     func viewModelForCreatingCategory() -> CategoryPopupViewModelType?
     func viewModelForSelectedCategory() -> ToDoListViewModelType?
     func selectItem(at indexPath: IndexPath)
-    
     func categoryIsSelected(at index: Int)
 }

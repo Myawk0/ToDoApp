@@ -13,9 +13,10 @@ class CategoriesViewController: UIViewController {
     
     private var viewModel: CategoriesViewModelType!
     
+    // MARK: - Views
+    
     private lazy var scrollView: UIScrollView = _scrollView
     private lazy var contentView: UIView = _contentView
-    
     private lazy var activityIndicator: UIActivityIndicatorView = _activityIndicator
     
     private lazy var kittyView: UIView = _kittyView
@@ -24,16 +25,18 @@ class CategoriesViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = _collectionView
     
+    // MARK: - Properties
+    
     private var collectionViewHeight = 0
     private var isTodayImageLoaded: Bool?
-    
-    var blurView: UIVisualEffectView?
     
     var loadingState: LoadingState = .idle {
         didSet {
             updateActivityIndicatorState()
         }
     }
+    
+    // MARK: - Init
     
     init() {
         viewModel = CategoriesViewModel()
@@ -44,6 +47,8 @@ class CategoriesViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -63,12 +68,60 @@ class CategoriesViewController: UIViewController {
         applyConstraints()
     }
     
+    // MARK: - Setup Delegates
+    
     private func setupDelegates() {
         RealmCategories.shared.delegate = self
         viewModel.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    
+    // MARK: - Method to load Cat Image
+    
+    private func loadCatImage() {
+        if let savedImage = viewModel.getSavedCatImage() {
+            kittyImageView.image = UIImage(data: savedImage)
+        }
+        loadingState = viewModel.loadingState
+    }
+    
+    // MARK: - Method to update state of Activity Indicator
+    
+    private func updateActivityIndicatorState() {
+        switch loadingState {
+        case .idle:
+            break
+        case .loading:
+            activityIndicator.startAnimating()
+            break
+        case .loaded:
+            activityIndicator.stopAnimating()
+            break
+        }
+    }
+    
+    // MARK: - Method to show Popup for creation a category
+    
+    func showPopup() {
+        guard let viewModel = viewModel else { return }
+        
+        let popupController = CategoryPopup()
+        popupController.viewModel = viewModel.viewModelForCreatingCategory()
+        popupController.openPopup(from: self)
+    }
+    
+    // MARK: - Method to show ToDo List Screen
+    
+    func showToDoList() {
+        let navController = navigationController as? NavigationController
+        let toDoController = ToDoListViewController()
+        toDoController.viewModel = viewModel.viewModelForSelectedCategory()
+        
+        navController?.pushViewController(toDoController, animated: true)
+    }
+    
+    // MARK: - Subviews
     
     private func addSubviews() {
         scrollView.addSubview(contentView)
@@ -80,6 +133,8 @@ class CategoriesViewController: UIViewController {
         
         contentView.addSubview(collectionView)
     }
+    
+    // MARK: - Constraints
     
     private func applyConstraints() {
         
@@ -117,52 +172,6 @@ class CategoriesViewController: UIViewController {
             make.height.equalTo(700)
         }
     }
-    
-    func loadCatImage() {
-        if let savedImage = viewModel.getSavedCatImage() {
-            kittyImageView.image = UIImage(data: savedImage)
-        }
-        loadingState = viewModel.loadingState
-    }
-    
-    func updateActivityIndicatorState() {
-        switch loadingState {
-        case .idle:
-            break
-        case .loading:
-            activityIndicator.startAnimating()
-            break
-        case .loaded:
-            activityIndicator.stopAnimating()
-            break
-        }
-    }
-    
-    func makeBackgroundBlur() {
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.01)
-        blurView.frame = view.bounds
-        view.addSubview(blurView)
-        
-        self.blurView = blurView
-    }
-    
-    func showPopup() {
-        guard let viewModel = viewModel else { return }
-        
-        let controller = CategoryPopup()
-        controller.viewModel = viewModel.viewModelForCreatingCategory()
-        controller.openPopup(self)
-    }
-    
-    func showToDoList() {
-        let navController = navigationController as? NavigationController
-        let toDoController = ToDoListViewController()
-        toDoController.viewModel = viewModel.viewModelForSelectedCategory()
-        
-        navController?.pushViewController(toDoController, animated: true)
-    }
 }
 
 // MARK: - UICollectionViewDataSource
@@ -174,7 +183,7 @@ extension CategoriesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.Categories.reuseIdentifier, for: indexPath) as? CategoryCell else { return UICollectionViewCell() }
         
         cell.currentViewController = self
         
@@ -309,7 +318,7 @@ private extension CategoriesViewController {
         collectionView.backgroundColor = .white
         collectionView.isScrollEnabled = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: K.Categories.reuseIdentifier)
         return collectionView
     }
 }

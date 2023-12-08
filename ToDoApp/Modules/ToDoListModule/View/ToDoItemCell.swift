@@ -9,7 +9,7 @@ import UIKit
 
 class ToDoItemCell: UITableViewCell {
     
-    static let reuseIdentifier = "ToDoItemCell"
+    // MARK: - ViewModel
     
     var viewModel: ToDoItemCellViewModelType? {
         willSet(viewModel) {
@@ -20,6 +20,8 @@ class ToDoItemCell: UITableViewCell {
         }
     }
     
+    // MARK: - Views
+    
     private lazy var itemStackView: UIStackView = _itemStackView
     private lazy var checkboxButton: UIButton = _checkboxButton
     private lazy var clearButton: UIButton = _clearButton
@@ -28,6 +30,8 @@ class ToDoItemCell: UITableViewCell {
     private lazy var newItemStackView: UIStackView = _newItemStackView
     private lazy var plusImage: UIImageView = _plusImage
     private lazy var newItemLabel: UILabel = _newItemLabel
+    
+    // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,20 +45,21 @@ class ToDoItemCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        needToCrossOutText()
-    }
+    // MARK: - Setup Delegates
     
     func setupDelegates() {
         itemTextField.delegate = self
         itemTextField.customDelegate = self
     }
     
+    // MARK: - Update Cell data
+    
     func updateCell(text: String, isSelected: Bool) {
         itemTextField.text = text
-        checkboxButton.isSelected = isSelected
+        checkboxIsSelected = isSelected
     }
+    
+    // MARK: - Hide New Item Row while search items
     
     func hideNewItemRow(if isSearch: Bool) {
         guard let isNewItemRow = viewModel?.isNewItemRow else { return }
@@ -64,7 +69,9 @@ class ToDoItemCell: UITableViewCell {
         }
     }
     
-    var needChangeLastCellApperance: Bool = false {
+    // MARK: - Last Cell is "New Item", when tap on it new row will appear
+    
+    private var needChangeLastCellApperance: Bool = false {
         didSet {
             itemTextField.becomeFirstResponder()
             itemStackView.isHidden = needChangeLastCellApperance
@@ -72,25 +79,38 @@ class ToDoItemCell: UITableViewCell {
         }
     }
     
+    private var checkboxIsSelected: Bool = false {
+        didSet {
+            checkboxButton.isSelected = checkboxIsSelected
+            needToCrossOutText()
+        }
+    }
+    
+    // MARK: - Selectors
+    
     @objc private func clearButtonTapped() {
         viewModel?.taskToDelete()
     }
     
     @objc func checkboxIsTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
- 
-        needToCrossOutText()
+        checkboxIsSelected.toggle()
         viewModel?.updateDoneState()
     }
     
+    // MARK: - Cross out text when it is selected
+    
     func needToCrossOutText() {
-        let task = itemTextField.text ?? ""
-        itemTextField.attributedText = viewModel?.updateTextAttributes(text: task, toCrossOut: checkboxButton.isSelected)
+        guard let task = itemTextField.text else { return }
+        itemTextField.attributedText = task.strikeThrough(checkboxIsSelected)
     }
+    
+    // MARK: - If row is added under any other row - make it active
     
     func makeNewTextFieldActive() {
         itemTextField.becomeFirstResponder()
     }
+    
+    // MARK: - Subviews
     
     private func addSubviews() {
         contentView.addSubview(itemStackView)
@@ -101,6 +121,8 @@ class ToDoItemCell: UITableViewCell {
         newItemStackView.addArrangedSubview(plusImage)
         newItemStackView.addArrangedSubview(newItemLabel)
     }
+    
+    // MARK: - Constraints
     
     private func applyConstraints() {
         itemStackView.snp.makeConstraints { make in
@@ -121,6 +143,8 @@ class ToDoItemCell: UITableViewCell {
     }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension ToDoItemCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -138,11 +162,15 @@ extension ToDoItemCell: UITextFieldDelegate {
     }
 }
 
+// MARK: - TextFieldDelegate (to delete row with "Del" button on keyboard
+
 extension ToDoItemCell: TextFieldDelegate {
     func deleteRowInTable() {
         viewModel?.taskToDelete()
     }
 }
+
+// MARK: - Setup Elements
 
 private extension ToDoItemCell {
     

@@ -12,8 +12,9 @@ class CategoryPopup: UIViewController {
     
     var viewModel: CategoryPopupViewModelType?
     
-    private lazy var backgroundView: UIView = _backgroundView
+    // MARK: - Views
     
+    private lazy var backgroundView: UIView = _backgroundView
     private lazy var stackView: UIStackView = _stackView
     private lazy var emojiButton: UIButton = _emojiButton
     private lazy var titleTextField: UITextField = _titleTextField
@@ -24,6 +25,8 @@ class CategoryPopup: UIViewController {
     
     private var blurView: UIVisualEffectView?
     private let durationOfClosing = 0.4
+    
+    // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -36,26 +39,13 @@ class CategoryPopup: UIViewController {
 
         addSubviews()
         applyConstraints()
-        
-        viewModel?.emoji.bind { [unowned self] in
-            guard let string = $0 else { return }
-            self.emojiButton.setTitle(string, for: .normal)
-        }
-        
-        delay(delay: 2) { [unowned self] in
-            self.viewModel?.emoji.value = "🐝"
-        }
     }
     
-    private func delay(delay: Double, closure: @escaping () -> ()) {
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + delay) {
-            closure()
-        }
-    }
+    // MARK: - Selectors
     
     @objc func closeButtonIsTapped(_ sender: UIButton) {
-        removeBackgroundBlur()
-        closePopupWithAnimation()
+        removeBackgroundBlur(blurView, duration: durationOfClosing)
+        closePopupWithAnimation(with: durationOfClosing)
     }
     
     @objc func saveButtonIsTapped(_ sender: UIButton) {
@@ -63,8 +53,8 @@ class CategoryPopup: UIViewController {
         
         viewModel?.createCategory(title: title, emoji: emoji)
         
-        removeBackgroundBlur()
-        closePopupWithAnimation()
+        removeBackgroundBlur(blurView, duration: durationOfClosing)
+        closePopupWithAnimation(with: durationOfClosing)
     }
     
     @objc func emojiButtonIsTapped(_ sender: UIButton) {
@@ -73,39 +63,14 @@ class CategoryPopup: UIViewController {
         viewController.sourceView = sender
         present(viewController, animated: true)
     }
-
-    func openPopup(_ controller: CategoriesViewController) {
-        controller.makeBackgroundBlur()
-        
-        view.center = controller.view.center
-        blurView = controller.blurView
-
-        modalTransitionStyle = .crossDissolve
-        modalPresentationStyle = .overCurrentContext
-        
-        view.alpha = 0.0
-        controller.present(self, animated: false) {
-            UIView.animate(withDuration: 0.3) {
-                self.view.alpha = 1.0
-            }
-        }
+    
+    // MARK: - Method to open Popup with blur background
+    
+    func openPopup(from controller: CategoriesViewController) {
+        blurView = openingPopup(controller)
     }
     
-    func removeBackgroundBlur() {
-        UIView.animate(withDuration: durationOfClosing, animations: {
-            self.blurView?.alpha = 0
-        }, completion: { finished in
-            self.blurView?.removeFromSuperview()
-        })
-    }
-    
-    func closePopupWithAnimation() {
-        UIView.animate(withDuration: durationOfClosing, animations: {
-            self.view.alpha = 0
-        }, completion: { finished in
-            self.dismiss(animated: false, completion: nil)
-        })
-    }
+    // MARK: - Subviews
     
     private func addSubviews() {
         backgroundView.addSubview(closeButton)
@@ -118,6 +83,8 @@ class CategoryPopup: UIViewController {
 
         view.addSubview(backgroundView)
     }
+    
+    // MARK: - Constraints
     
     private func applyConstraints() {
         
@@ -146,11 +113,15 @@ class CategoryPopup: UIViewController {
     }
 }
 
+// MARK: - MCEmojiPickerDelegate
+
 extension CategoryPopup: MCEmojiPickerDelegate {
     func didGetEmoji(emoji: String) {
         emojiButton.setTitle(emoji, for: .normal)
     }
 }
+
+// MARK: - Setting up elements
 
 private extension CategoryPopup {
     

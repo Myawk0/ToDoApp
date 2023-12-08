@@ -14,7 +14,7 @@ protocol CategoryCellDelegate: AnyObject {
 
 class CategoryCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "CategoryCell"
+    // MARK: - ViewModel
     
     var viewModel: CategoryCellViewModelType? {
         willSet(viewModel) {
@@ -26,6 +26,8 @@ class CategoryCell: UICollectionViewCell {
     
     weak var currentViewController: CategoriesViewController?
     weak var delegate: CategoryCellDelegate?
+    
+    // MARK: - Views
     
     private lazy var closeButton: UIButton = _closeButton
     private lazy var addButton: UIButton = _addButton
@@ -43,6 +45,8 @@ class CategoryCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Init
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -55,6 +59,58 @@ class CategoryCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
     
+    // MARK: - Setup appearance of each cell
+    
+    private func setupAppearance() {
+        contentView.backgroundColor = .white
+        contentView.addShadow()
+    }
+    
+    // MARK: - Update Cell data
+    
+    func updateCell(emoji: String, title: String, count: Int) {
+        emojiButton.setTitle(emoji, for: .normal)
+        categoryTitle.text = title
+        
+        let tasksString = count == 1 ? "task" : "tasks"
+        countTasksLabel.text = "\(count) \(tasksString)"
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func emojiButtonIsTapped(_ sender: UIButton) {
+        let viewController = MCEmojiPickerViewController()
+        viewController.delegate = self
+        viewController.sourceView = sender
+        currentViewController?.present(viewController, animated: true)
+    }
+    
+    @objc func closeButtonIsTapped(_ sender: UIButton) {
+        let alert = showAlert()
+        currentViewController?.present(alert, animated: true)
+    }
+    
+    // MARK: - Show alert when delete the cell
+    
+    private func showAlert() -> UIAlertController {
+        let categoryTitle = categoryTitle.text ?? ""
+        let alertTitle = "Delete the \(categoryTitle)?"
+        
+        let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
+        alert.setValue(getAttributedTitle(with: alertTitle), forKey: K.Categories.attributedTitleKey)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
+            self.viewModel?.deleteCategory()
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(deleteAction)
+        return alert
+    }
+    
+    // MARK: - Subviews
+    
     private func addSubviews() {
         contentView.addSubview(addButton)
         contentView.addSubview(closeButton)
@@ -64,6 +120,8 @@ class CategoryCell: UICollectionViewCell {
         stackView.addArrangedSubview(categoryTitle)
         stackView.addArrangedSubview(countTasksLabel)
     }
+    
+    // MARK: - Constraints
     
     private func applyConstraints() {
         addButton.snp.makeConstraints { make in
@@ -82,51 +140,9 @@ class CategoryCell: UICollectionViewCell {
             make.edges.equalToSuperview().inset(20)
         }
     }
-    
-    func setupAppearance() {
-        contentView.backgroundColor = .white
-        contentView.addShadow()
-    }
-    
-    func updateCell(emoji: String, title: String, count: Int) {
-        emojiButton.setTitle(emoji, for: .normal)
-        categoryTitle.text = title
-        
-        let tasksString = count == 1 ? "task" : "tasks"
-        countTasksLabel.text = "\(count) \(tasksString)"
-    }
-    
-    @objc func emojiButtonIsTapped(_ sender: UIButton) {
-        let viewController = MCEmojiPickerViewController()
-        viewController.delegate = self
-        viewController.sourceView = sender
-        currentViewController?.present(viewController, animated: true)
-    }
-    
-    @objc func closeButtonIsTapped(_ sender: UIButton) {
-        let alert = showAlert()
-        currentViewController?.present(alert, animated: true)
-    }
-    
-    func showAlert() -> UIAlertController {
-        let alert = UIAlertController(title: "Delete the \(categoryTitle.text ?? "")?", message: "", preferredStyle: .alert)
-        
-        let attributedTitle = NSAttributedString(string: "Delete the \(categoryTitle.text ?? "")?", attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18, weight: .medium)
-        ])
-
-        alert.setValue(attributedTitle, forKey: "attributedTitle")
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
-            self.viewModel?.deleteCategory()
-        }
-        
-        alert.addAction(cancelAction)
-        alert.addAction(deleteAction)
-        return alert
-    }
 }
+
+// MARK: - MCEmojiPickerDelegate
 
 extension CategoryCell: MCEmojiPickerDelegate {
     func didGetEmoji(emoji: String) {
@@ -134,6 +150,8 @@ extension CategoryCell: MCEmojiPickerDelegate {
         viewModel?.updateCategory(emoji: emoji)
     }
 }
+
+// MARK: - Setup Elements
 
 private extension CategoryCell {
     

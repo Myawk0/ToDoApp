@@ -12,7 +12,7 @@ protocol ToDoItemCellViewModelType {
     var isNewItemRow: Bool { get set }
     var text: String { get }
     var isSelected: Bool { get }
-    func updateTextAttributes(text: String, toCrossOut: Bool) -> NSAttributedString
+    
     func updateDoneState()
     func taskIsWrittenInTextField(with text: String) 
     func taskToDelete()

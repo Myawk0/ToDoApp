@@ -8,6 +8,5 @@
 import Foundation
 
 protocol CategoryPopupViewModelType {
-    var emoji: Box<String?> { get }
     func createCategory(title: String, emoji: String)
 }

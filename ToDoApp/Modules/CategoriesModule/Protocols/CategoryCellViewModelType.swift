@@ -11,6 +11,7 @@ protocol CategoryCellViewModelType: AnyObject {
     var emoji: String { get }
     var title: String { get }
     var countTasks: Int { get }
+    
     func updateCategory(emoji: String)
     func deleteCategory() 
 }

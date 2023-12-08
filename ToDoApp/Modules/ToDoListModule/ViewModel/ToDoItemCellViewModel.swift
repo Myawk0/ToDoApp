@@ -31,16 +31,6 @@ class ToDoItemCellViewModel: ToDoItemCellViewModelType {
         return item?.done ?? false
     }
     
-    func updateTextAttributes(text: String, toCrossOut: Bool) -> NSAttributedString {
-        var attributedString = NSAttributedString(string: text)
-        
-        if toCrossOut {
-            attributedString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue])
-        }
-      
-        return attributedString
-    }
-    
     func updateDoneState() {
         if let item = realmService.todoItems?[indexPath.row] {
             realmService.updateTaskState(item)

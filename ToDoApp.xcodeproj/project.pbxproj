@@ -11,7 +11,6 @@
 		9057813C2AD5443B008A9F41 /* CatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057813B2AD5443B008A9F41 /* CatData.swift */; };
 		905781402AD5736F008A9F41 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9057813F2AD5736F008A9F41 /* Category.swift */; };
 		905781442AD5939A008A9F41 /* CategoryPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 905781432AD5939A008A9F41 /* CategoryPopup.swift */; };
-		90A22FFE2AE1D0CA00F8874E /* Boxing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22FFD2AE1D0CA00F8874E /* Boxing.swift */; };
 		90A230002AE1E95E00F8874E /* ToDoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A22FFF2AE1E95E00F8874E /* ToDoListViewModel.swift */; };
 		90A230042AE422E600F8874E /* ToDoListViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A230032AE422E600F8874E /* ToDoListViewModelType.swift */; };
 		90A230062AE4248200F8874E /* ToDoItemCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A230052AE4248200F8874E /* ToDoItemCellViewModel.swift */; };
@@ -34,6 +33,10 @@
 		90AC2E422AE03ED9001AC7E7 /* CategoryCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC2E412AE03ED9001AC7E7 /* CategoryCellViewModel.swift */; };
 		90AC2E442AE05FF8001AC7E7 /* CategoryPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC2E432AE05FF8001AC7E7 /* CategoryPopupViewModel.swift */; };
 		90AC2E462AE0601B001AC7E7 /* CategoryPopupViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AC2E452AE0601B001AC7E7 /* CategoryPopupViewModelType.swift */; };
+		90BA8AE22B226415000C484C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BA8AE12B226415000C484C /* Constants.swift */; };
+		90BA8AE42B230C0C000C484C /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BA8AE32B230C0C000C484C /* UIViewController.swift */; };
+		90BA8AE72B231378000C484C /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BA8AE62B231378000C484C /* LoadingState.swift */; };
+		90BA8AE92B232548000C484C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BA8AE82B232548000C484C /* String.swift */; };
 		90D61D3C2AD48FB0008C4AA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D61D3B2AD48FB0008C4AA3 /* AppDelegate.swift */; };
 		90D61D3E2AD48FB0008C4AA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D61D3D2AD48FB0008C4AA3 /* SceneDelegate.swift */; };
 		90D61D452AD48FB1008C4AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90D61D442AD48FB1008C4AA3 /* Assets.xcassets */; };
@@ -51,7 +54,6 @@
 		9057813B2AD5443B008A9F41 /* CatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatData.swift; sourceTree = "<group>"; };
 		9057813F2AD5736F008A9F41 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		905781432AD5939A008A9F41 /* CategoryPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPopup.swift; sourceTree = "<group>"; };
-		90A22FFD2AE1D0CA00F8874E /* Boxing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boxing.swift; sourceTree = "<group>"; };
 		90A22FFF2AE1E95E00F8874E /* ToDoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModel.swift; sourceTree = "<group>"; };
 		90A230032AE422E600F8874E /* ToDoListViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewModelType.swift; sourceTree = "<group>"; };
 		90A230052AE4248200F8874E /* ToDoItemCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemCellViewModel.swift; sourceTree = "<group>"; };
@@ -74,6 +76,10 @@
 		90AC2E412AE03ED9001AC7E7 /* CategoryCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellViewModel.swift; sourceTree = "<group>"; };
 		90AC2E432AE05FF8001AC7E7 /* CategoryPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPopupViewModel.swift; sourceTree = "<group>"; };
 		90AC2E452AE0601B001AC7E7 /* CategoryPopupViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPopupViewModelType.swift; sourceTree = "<group>"; };
+		90BA8AE12B226415000C484C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		90BA8AE32B230C0C000C484C /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		90BA8AE62B231378000C484C /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		90BA8AE82B232548000C484C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		90D61D382AD48FB0008C4AA3 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		90D61D3B2AD48FB0008C4AA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		90D61D3D2AD48FB0008C4AA3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,8 +210,8 @@
 		90AC2E2E2ADFDCBE001AC7E7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				90A22FFD2AE1D0CA00F8874E /* Boxing.swift */,
 				9057813B2AD5443B008A9F41 /* CatData.swift */,
+				90BA8AE12B226415000C484C /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -282,6 +288,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		90BA8AE52B231365000C484C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				90BA8AE62B231378000C484C /* LoadingState.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		90D61D2F2AD48FB0008C4AA3 = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +324,7 @@
 				90AC2E2F2ADFDE7A001AC7E7 /* StorageManager */,
 				90D61D5A2AD53CEC008C4AA3 /* Extension */,
 				90A230092AE462D400F8874E /* CustomViews */,
+				90BA8AE52B231365000C484C /* Helpers */,
 				90AC2E232ADF2A6E001AC7E7 /* Resources */,
 				90D61D462AD48FB1008C4AA3 /* LaunchScreen.storyboard */,
 				90D61D492AD48FB1008C4AA3 /* Info.plist */,
@@ -339,6 +354,8 @@
 			isa = PBXGroup;
 			children = (
 				90D61D5B2AD53CFF008C4AA3 /* UIView.swift */,
+				90BA8AE32B230C0C000C484C /* UIViewController.swift */,
+				90BA8AE82B232548000C484C /* String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -483,15 +500,17 @@
 				90D61D3E2AD48FB0008C4AA3 /* SceneDelegate.swift in Sources */,
 				90AC2E322ADFE082001AC7E7 /* StorageManager.swift in Sources */,
 				90D61D522AD49034008C4AA3 /* CategoriesViewController.swift in Sources */,
-				90A22FFE2AE1D0CA00F8874E /* Boxing.swift in Sources */,
+				90BA8AE42B230C0C000C484C /* UIViewController.swift in Sources */,
 				90AC2E1E2AD72E82001AC7E7 /* NavigationController.swift in Sources */,
 				90D61D5C2AD53CFF008C4AA3 /* UIView.swift in Sources */,
 				90AC2E1A2AD5D5B1001AC7E7 /* ToDoItemCell.swift in Sources */,
+				90BA8AE72B231378000C484C /* LoadingState.swift in Sources */,
 				90AC2E2A2ADF3024001AC7E7 /* Endpoint.swift in Sources */,
 				90AC2E182AD5C5E1001AC7E7 /* ToDoListController.swift in Sources */,
 				90A230042AE422E600F8874E /* ToDoListViewModelType.swift in Sources */,
 				9057813C2AD5443B008A9F41 /* CatData.swift in Sources */,
 				90AC2E1C2AD5DFBD001AC7E7 /* ToDoItem.swift in Sources */,
+				90BA8AE22B226415000C484C /* Constants.swift in Sources */,
 				90D61D562AD493FC008C4AA3 /* CategoryCell.swift in Sources */,
 				90AC2E362AE017C2001AC7E7 /* RealmToDoItems.swift in Sources */,
 				90AC2E462AE0601B001AC7E7 /* CategoryPopupViewModelType.swift in Sources */,
@@ -499,6 +518,7 @@
 				90AC2E3A2AE01D10001AC7E7 /* CategoriesViewModelType.swift in Sources */,
 				90AC2E262ADF2AD4001AC7E7 /* API.swift in Sources */,
 				905781402AD5736F008A9F41 /* Category.swift in Sources */,
+				90BA8AE92B232548000C484C /* String.swift in Sources */,
 				90AC2E422AE03ED9001AC7E7 /* CategoryCellViewModel.swift in Sources */,
 				90AC2E342AE017B2001AC7E7 /* RealmCategories.swift in Sources */,
 			);

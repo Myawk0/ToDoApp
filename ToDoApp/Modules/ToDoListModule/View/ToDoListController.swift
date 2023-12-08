@@ -9,11 +9,17 @@ import UIKit
 
 class ToDoListViewController: UIViewController {
     
+    // MARK: - ViewModel
+    
     var viewModel: ToDoListViewModelType?
+    
+    // MARK: - View
     
     private lazy var tableView: UITableView = _tableView
     
     var isSearch = false
+    
+    // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -33,10 +39,14 @@ class ToDoListViewController: UIViewController {
         applyConstraints()
     }
     
+    // MARK: - Setup NavigationBar
+    
     private func setupNavigationBar() {
         let navController = navigationController as! NavigationController
         navController.navDelegate = self
     }
+    
+    // MARK: - Setup Delegates
     
     private func setupDelegates() {
         RealmToDoItems.shared.delegate = self
@@ -44,9 +54,13 @@ class ToDoListViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    // MARK: - Subviews
+    
     private func addSubviews() {
         view.addSubview(tableView)
     }
+    
+    // MARK: - Constraints
     
     private func applyConstraints() {
         tableView.snp.makeConstraints { make in
@@ -66,7 +80,7 @@ extension ToDoListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ToDoItemCell.reuseIdentifier, for: indexPath) as! ToDoItemCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.ToDoList.reuseIdentifier, for: indexPath) as! ToDoItemCell
         
         cell.selectionStyle = .none
        
@@ -94,6 +108,8 @@ extension ToDoListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - RealmToDoItemsDelegate to update UITableView
+
 extension ToDoListViewController: RealmToDoItemsDelegate {
     
     func insertRowInTable(at index: Int) {
@@ -105,6 +121,8 @@ extension ToDoListViewController: RealmToDoItemsDelegate {
     }
 }
 
+// MARK: - NavigationControllerDelegate
+
 extension ToDoListViewController: NavigationControllerDelegate {
     func updateData(isSearch: Bool) {
         self.isSearch = isSearch
@@ -112,12 +130,14 @@ extension ToDoListViewController: NavigationControllerDelegate {
     }
 }
 
+// MARK: - Setup elements
+
 private extension ToDoListViewController {
     var _tableView: UITableView {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        tableView.register(ToDoItemCell.self, forCellReuseIdentifier: ToDoItemCell.reuseIdentifier)
+        tableView.register(ToDoItemCell.self, forCellReuseIdentifier: K.ToDoList.reuseIdentifier)
         return tableView
     }
 }
